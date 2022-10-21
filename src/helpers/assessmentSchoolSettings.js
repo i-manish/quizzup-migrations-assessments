@@ -104,6 +104,11 @@ const insertAssessmentSchoolSettings = async () => {
           bulk.insert(hash);
         });
       }
+      // bulk.execute((error, result) => {
+      //   if (error) {
+      //     console.log(error);
+      //   }
+      // })
     }
   } catch (err) {
     console.log(err);
