@@ -5,7 +5,7 @@ const DB = require("./config/reportBeeDb");
 const insertAssessmentSchoolSettings = require("./helpers/assessmentSchoolSettings");
 
 let main = async () => {
-  // await insertAssessments();
+  await insertAssessments();
   await insertAssessmentSchoolSettings();
 };
 

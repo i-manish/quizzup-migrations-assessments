@@ -48,16 +48,16 @@ const insertAssessmentSchoolSettings = async () => {
         type: reportBeeDb.QueryTypes.SELECT,
       }
     );
-    // const assessments = await Assessment.find({
-    //   $and: [
-    //     {
-    //       isMigratedAssessment: { $exists: true },
-    //     },
-    //     {
-    //       isMigratedAssessment: true,
-    //     },
-    //   ],
-    // });
+    const assessments = await Assessment.find({
+      $and: [
+        {
+          isMigratedAssessment: { $exists: true },
+        },
+        {
+          isMigratedAssessment: true,
+        },
+      ],
+    });
     const bulk = AssessmentSchoolSettings.collection.initializeOrderedBulkOp();
     for (const assessmentDetail of assessmentQueryResponse) {
       const schoolDetails = assessmentSchoolSettingQueryResponse.filter(
@@ -67,12 +67,12 @@ const insertAssessmentSchoolSettings = async () => {
           );
         }
       );
-      // const assessment = assessments.find((assessment) => {
-      //   return assessment["name"] === assessmentDetail["name"];
-      // });
-      // if (assessment == undefined) {
-      //   throw new Error(`Assessment is not migrated from QuizzUp`);
-      // }
+      const assessment = assessments.find((assessment) => {
+        return assessment["name"] === assessmentDetail["name"];
+      });
+      if (assessment == undefined) {
+        throw new Error(`Assessment is not migrated from QuizzUp`);
+      }
       const responseHash = {};
       schoolDetails.map((schoolDetail) => {
         if (

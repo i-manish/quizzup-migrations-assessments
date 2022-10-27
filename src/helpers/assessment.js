@@ -12,6 +12,7 @@ const insertAssessments = async () => {
          JOIN assessment_questions aq ON aq.assessment_id = a.id
          JOIN standard_questions sq ON sq.question_id = aq.question_id
          JOIN standards s ON sq.standard_id = s.id
+         WHERE name REGEXP 'xlm|XLM'
         `;
     // SELECT created_at, duration, id, instructions, name, max_marks, randomize_questions, subject_id, year_name FROM assessments
     const assessmentQueryResponse = await DB.query(fetchAssessmentsQuery, {
@@ -52,6 +53,8 @@ const insertAssessments = async () => {
       temp["yearName"] = quizzupAssessment["year_name"];
       temp["updatedAt"] = new Date();
       temp["questionSourceStandardId"] =
+        standardNameIdMap[quizzupAssessment["standard_name"]];
+      temp["xseedGlobalStandardId"] =
         standardNameIdMap[quizzupAssessment["standard_name"]];
       temp["demoTestTotalTime"] = 2;
       temp["publishReportAfter"] = 24;
